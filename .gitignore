@@ -1,3 +1,6 @@
-
 /.idea/
 .idea/vcs.xml
+config.php
+daemon-php.err
+daemon-php.log
+daemon-php.pid
