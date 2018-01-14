@@ -1,0 +1,19 @@
+[Unit]
+Description=PhpSchedule
+After=mysql.service
+Requires=mysql.service
+
+[Service]
+Type=forking
+PIDFile=/develop/PhpSchedule/daemon-php.pid
+WorkingDirectory=/develop/PhpSchedule/
+
+Environment=RACK_ENV=production
+
+ExecStart=/usr/bin/php /develop/PhpSchedule/run.php start
+ExecStop=/usr/bin/php /develop/PhpSchedule/run.php stop
+ExecReload=/usr/bin/php /develop/PhpSchedule/run.php restart
+TimeoutSec=300
+
+[Install]
+WantedBy=multi-user.target
