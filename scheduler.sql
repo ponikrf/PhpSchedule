@@ -11,6 +11,7 @@ CREATE TABLE `tbl_task` (
   `name` varchar(255) NOT NULL,
   `description` text,
   `command` text,
+  `singleton` tinyint(1) NOT NULL DEFAULT '0',
   `repeat` tinyint(1) NOT NULL DEFAULT '0',
   `repeat_count` int(11) NOT NULL DEFAULT '0',
   `interval` varchar(45) NOT NULL DEFAULT 'DAY',
@@ -26,7 +27,7 @@ CREATE TABLE `tbl_task` (
 -- Records of tbl_task
 -- ----------------------------
 BEGIN;
-INSERT INTO `tbl_task` VALUES (1, 'Test', 'Test descirption', 'ps ax', 1, 0, '\'MINUTE\'', 1, '2018-01-01 00:00:00', NULL, '2018-01-01 00:00:00', '2018-01-14 14:31:11');
+INSERT INTO `tbl_task` VALUES (1, 'Test', 'Test descirption', 'ps ax', 0, 1, 0, '\'MINUTE\'', 1, '2018-01-01 00:00:00', NULL, '2018-01-01 00:00:00', '2018-01-14 14:31:11');
 COMMIT;
 
 -- ----------------------------

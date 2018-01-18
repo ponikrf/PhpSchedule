@@ -30,6 +30,9 @@ class MyDaemon extends DaemonPHP
             foreach ($Tasks AS $task) {
 
                 if (array_key_exists($task['id'], $this->ch_pids)) {
+                    if ($task['singleton']){
+                        continue;
+                    }
                     $this->ch_pids[uniqid()] = $this->ch_pids[$task['id']];
                 }
 
@@ -80,7 +83,7 @@ class MyDaemon extends DaemonPHP
     private function _getTasks()
     {
         return Database::query("
-              SELECT `id`, `command`,`repeat`, `repeat_count`,`last_datetime`,`interval_count`,`interval`,
+              SELECT `id`, `command`,`singleton`,`repeat`, `repeat_count`,`last_datetime`,`interval_count`,`interval`,
                   (select count(id) from tbl_task_history where id_task = tbl_task.id) AS run_count,
                   FLOOR(datetime_get_timestamp_diff(`interval`,last_datetime,now())/interval_count) AS interval_diff
               FROM tbl_task
