@@ -27,7 +27,7 @@ CREATE TABLE `tbl_task` (
 -- Records of tbl_task
 -- ----------------------------
 BEGIN;
-INSERT INTO `tbl_task` VALUES (1, 'Test', 'Test descirption', 'ps ax', 0, 1, 0, '\'MINUTE\'', 1, '2018-01-01 00:00:00', NULL, '2018-01-01 00:00:00', '2018-01-14 14:31:11');
+INSERT INTO `tbl_task` VALUES (1, 'Test', 'Test descirption', 'ps ax', 0, 1, 0, 'MINUTE', 1, '2018-01-01 00:00:00', NULL, '2018-01-01 00:00:00', '2018-01-14 14:31:11');
 COMMIT;
 
 -- ----------------------------
