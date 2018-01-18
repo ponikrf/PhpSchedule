@@ -10,6 +10,8 @@ WorkingDirectory=/develop/PhpSchedule/
 
 Environment=RACK_ENV=production
 
+Restart=on-failure
+
 ExecStart=/usr/bin/php /develop/PhpSchedule/run.php start
 ExecStop=/usr/bin/php /develop/PhpSchedule/run.php stop
 ExecReload=/usr/bin/php /develop/PhpSchedule/run.php restart
