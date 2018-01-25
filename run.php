@@ -30,7 +30,7 @@ class MyDaemon extends DaemonPHP
             foreach ($Tasks AS $task) {
 
                 if (array_key_exists($task['id'], $this->ch_pids)) {
-                    if ($task['singleton']){
+                    if ($task['singleton']) {
                         continue;
                     }
                     $this->ch_pids[uniqid()] = $this->ch_pids[$task['id']];
@@ -60,14 +60,23 @@ class MyDaemon extends DaemonPHP
     {
         Database::reconnect();
         $newLast = Database::datetime_add_interval($task['last_datetime'], $task['interval_diff'] * $task['interval_count'], $task['interval']);
-        Database::query("Update tbl_task SET last_datetime = '{$newLast}' WHERE id = " . $task['id']);
+        $pped = Database::prepare("Update tbl_task SET last_datetime = :last_datetime WHERE id = :id");
+        $pped->execute([
+            ':last_datetime' => $newLast,
+            ':id' => $task['id'],
+        ]);
 
         $start_sch = microtime(true);
         exec($task['command'], $output, $result);
         $mict_sch = (microtime(true) - $start_sch);
 
-        $params = Database::parseArg([$task['id'], Util::ArrayToString($output, "\n"), $mict_sch]);
-        Database::query("Insert into tbl_task_history (id_task,result,execute_time) VALUES({$params})");
+        print_r([$task['id'], Util::ArrayToString($output, "\n"), $mict_sch]);
+        $pped = Database::prepare("Insert into tbl_task_history (id_task, result, execute_time) VALUES (:id_task, :result, :execute_time)");
+        $pped->execute([
+            ':id_task' => $task['id'],
+            ':result' => Util::ArrayToString($output, "\n"),
+            ':execute_time' => $mict_sch,
+        ]);
         exit(0);
     }
 

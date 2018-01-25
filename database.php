@@ -41,6 +41,10 @@ class Database
         self::$db = new PDO("mysql:host=" . self::$host . ";dbname=" . self::$database . ";", self::$username, self::$password, $opt);
     }
 
+    public static function prepare($sql){
+        return self::$db->prepare($sql);
+    }
+
     /**
      * Send query
      *
